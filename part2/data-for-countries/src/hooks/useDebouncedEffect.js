@@ -1,0 +1,17 @@
+// useDebouncedEffect
+// https://stackoverflow.com/a/61127960
+import { useCallback, useEffect } from "react";
+
+export default function useDebouncedEffect(effect, delay, deps) {
+  const callback = useCallback(effect, [...deps]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      callback();
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [callback, delay]);
+}
